@@ -30,5 +30,4 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency("rexml")
   gem.add_runtime_dependency("base64")
   gem.add_runtime_dependency("ostruct")
-  gem.add_runtime_dependency("cgi")
 end
