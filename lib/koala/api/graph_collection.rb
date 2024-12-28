@@ -1,5 +1,4 @@
 require 'addressable/uri'
-require 'cgi'
 
 module Koala
   module Facebook
