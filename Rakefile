@@ -1,15 +1,26 @@
-require 'rake'
+# frozen_string_literal: true
 
-begin
-  require 'bundler/setup'
-  Bundler::GemHelper.install_tasks
-rescue LoadError
-  puts 'although not required, bundler is recommened for running the tests'
+$LOAD_PATH.unshift File.dirname(__FILE__)
+
+Dir['tasks/**/*.rake'].each { |rake| load rake }
+
+require 'bundler'
+Bundler::GemHelper.install_tasks
+
+desc 'Start a console session with Faker loaded'
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'faker' # You know what to do.
+
+  ARGV.clear
+  IRB.start
 end
 
-task :default => :spec
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new do |t|
-  t.rspec_opts = ["--color", '--format doc']
-end
+require 'yard'
+YARD::Rake::YardocTask.new
+
+task default: %w[test rubocop]
